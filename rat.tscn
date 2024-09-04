@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://dluf0lkl8gr5l"]
+
+[ext_resource type="Script" path="res://rat.gd" id="1_px208"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xtf2y"]
+height = 34.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oe541"]
+
+[sub_resource type="Animation" id="Animation_0xxiv"]
+resource_name = "movement"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.1, 0, 1, 2, 3, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(200, 0), Vector2(400, 0), Vector2(600, 0), Vector2(800, 0), Vector2(1000, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7atmx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mshq3"]
+_data = {
+"RESET": SubResource("Animation_7atmx"),
+"movement": SubResource("Animation_0xxiv")
+}
+
+[node name="Rat" type="Area2D"]
+script = ExtResource("1_px208")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xtf2y")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="CollisionShape2D"]
+modulate = Color(0.498039, 0.498039, 0.498039, 1)
+position = Vector2(0.0936408, 0.0170414)
+scale = Vector2(19.9161, 17.0255)
+mesh = SubResource("CapsuleMesh_oe541")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mshq3")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
