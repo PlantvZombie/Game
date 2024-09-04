@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3xu8ftdnjxeo"]
+
+[ext_resource type="Script" path="res://laser.gd" id="1_owflt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aorxk"]
+radius = 5.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_or0le"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_maco6"]
+
+[node name="Laser" type="Area2D"]
+rotation = 1.5708
+script = ExtResource("1_owflt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_aorxk")
+
+[node name="Sprite2D" type="MeshInstance2D" parent="CollisionShape2D"]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-2.38419e-07, 2.38419e-06)
+scale = Vector2(10, 15)
+mesh = SubResource("CapsuleMesh_or0le")
+texture = SubResource("CanvasTexture_maco6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

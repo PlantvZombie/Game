@@ -22,5 +22,7 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, direction * SPEED, 80)
 	else:
 		velocity.x = move_toward(velocity.x, 0, 65)
+	
+	get_node("/root/Global").PlayerPos = self.position
 
 	move_and_slide()
