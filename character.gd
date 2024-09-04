@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -300.0
+var grapplingHook = true
+var grappleTargets = []
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -15,7 +17,8 @@ func _physics_process(delta):
 	# Handle Jump.
 	if Input.is_action_just_pressed("space") and is_on_floor() or Input.is_action_just_pressed("up") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+	if Input.is_action_just_pressed("space") and not is_on_floor() or Input.is_action_just_pressed("up") and not is_on_floor():
+			print(("$\"../Floor/"+ grappleTargets[0]))
 
 	var direction = Input.get_axis("left", "right")
 	if direction:
