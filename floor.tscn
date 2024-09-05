@@ -12,6 +12,7 @@ specular_color = Color(0.32549, 0.32549, 0.32549, 1)
 shape = SubResource("RectangleShape2D_06w7l")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+modulate = Color(0.729412, 0.729412, 0.729412, 1)
 position = Vector2(-1.71661e-05, 0)
 scale = Vector2(484, 20)
 texture = SubResource("CanvasTexture_j5abh")

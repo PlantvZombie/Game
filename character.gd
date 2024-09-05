@@ -1,13 +1,19 @@
 extends CharacterBody2D
 
 const SPEED = 400.0
-const JUMP_VELOCITY = -300.0
+
+const JUMP_VELOCITY = -400.0
 var grapplingHook = true
 var grappleTargets = []
+
+var left:bool = false
+var right:bool = false
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+@onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -28,9 +34,26 @@ func _physics_process(delta):
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * SPEED, 80)
+		if Input.is_action_pressed("left"):
+			anim.play("Run Left")
+			left = true
+			right = false
+		else:
+			anim.play("Run Right")
+			right = true
+			left = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, 65)
+
+		if velocity.x == 0 and !left and !right:
+			anim.play("Idle")
+		elif velocity.x == 0 and left:
+			anim.play("IdleLeft")
+		elif velocity.x == 0 and right:
+			anim.play("IdleRight")
 	
+	get_node("/root/Global").PlayerPos = self.position
+
 	move_and_slide()
 	
 func distance(x0, y0, x1, y1):
