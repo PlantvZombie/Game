@@ -1,11 +1,9 @@
-
-[gd_scene load_steps=4 format=3 uid="uid://ddjac3tjv58vu"]
+[gd_scene load_steps=5 format=3 uid="uid://ddjac3tjv58vu"]
 
 [ext_resource type="PackedScene" uid="uid://b32p31dpg1p3t" path="res://character.tscn" id="1_et1i1"]
 [ext_resource type="PackedScene" uid="uid://bqdktm4x76lll" path="res://floor.tscn" id="2_monho"]
+[ext_resource type="PackedScene" path="res://camera.tscn" id="3_28s2i"]
 [ext_resource type="PackedScene" uid="uid://pp7dijinsrjj" path="res://grappling_hook_target.tscn" id="3_bkrv1"]
-[ext_resource type="PackedScene" uid="uid://dairswp00r4e" path="res://camera.tscn" id="3_28s2i"]
-
 
 [node name="Test" type="Node2D"]
 
@@ -14,7 +12,6 @@ position = Vector2(578, 341)
 
 [node name="Floor" parent="." instance=ExtResource("2_monho")]
 position = Vector2(576, 468)
-
 
 [node name="Grappling hook target" parent="Floor" instance=ExtResource("3_bkrv1")]
 position = Vector2(-18, -3)
@@ -30,4 +27,3 @@ modulate = Color(0.215686, 0.215686, 0.215686, 1)
 z_index = -1
 offset_right = 1156.0
 offset_bottom = 646.0
-
