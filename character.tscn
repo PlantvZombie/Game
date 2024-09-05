@@ -1,4 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://cxmdasgl0ayr7"]
+
+[gd_scene load_steps=4 format=3 uid="uid://b32p31dpg1p3t"]
+
 
 [ext_resource type="Script" path="res://character.gd" id="1_7og8y"]
 [ext_resource type="Texture2D" uid="uid://cf8icbcritldl" path="res://Sprites/Prototype_Character-Sheet.png" id="2_xiv5k"]

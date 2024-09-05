@@ -1,9 +1,14 @@
 extends CharacterBody2D
 
 const SPEED = 400.0
+
 const JUMP_VELOCITY = -400.0
+var grapplingHook = true
+var grappleTargets = []
+
 var left:bool = false
 var right:bool = false
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -16,9 +21,15 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("space") and is_on_floor() or Input.is_action_just_pressed("up") and is_on_floor():
+	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
 		velocity.y = JUMP_VELOCITY
-
+	if grappleTargets.size() > 0 and not is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
+		
+		var grappleDistance = -1
+		for j in grappleTargets.size():
+			if sqrt((grappleTargets[j].x)^2) > grappleDistance:
+				pass
+		print(grappleTargets[0].position)
 
 	var direction = Input.get_axis("left", "right")
 	if direction:
@@ -33,6 +44,7 @@ func _physics_process(delta):
 			left = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, 65)
+
 		if velocity.x == 0 and !left and !right:
 			anim.play("Idle")
 		elif velocity.x == 0 and left:
@@ -43,3 +55,8 @@ func _physics_process(delta):
 	get_node("/root/Global").PlayerPos = self.position
 
 	move_and_slide()
+	
+func distance(x0, y0, x1, y1):
+	return sqrt((x0 - x1)**2+(y0-y1)**2)
+
+
