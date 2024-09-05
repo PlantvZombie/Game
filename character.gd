@@ -15,10 +15,11 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("space") and is_on_floor() or Input.is_action_just_pressed("up") and is_on_floor():
+	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
 		velocity.y = JUMP_VELOCITY
-	if Input.is_action_just_pressed("space") and not is_on_floor() or Input.is_action_just_pressed("up") and not is_on_floor():
-			print(("$\"../Floor/"+ grappleTargets[0]))
+	if grappleTargets.size() > 0 and not is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
+			print(grappleTargets[0].position)
+			print(grappleTargets)
 
 	var direction = Input.get_axis("left", "right")
 	if direction:

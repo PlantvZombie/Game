@@ -13,3 +13,7 @@ position = Vector2(578, 341)
 position = Vector2(576, 468)
 
 [node name="Grappling hook target" parent="Floor" instance=ExtResource("3_bkrv1")]
+position = Vector2(-18, -3)
+
+[node name="Grappling hook target2" parent="Floor" instance=ExtResource("3_bkrv1")]
+position = Vector2(41, -7)
