@@ -1,65 +1,105 @@
-[gd_scene load_steps=7 format=3 uid="uid://dluf0lkl8gr5l"]
+[gd_scene load_steps=14 format=3 uid="uid://dluf0lkl8gr5l"]
 
 [ext_resource type="Script" path="res://rat.gd" id="1_px208"]
+[ext_resource type="Texture2D" uid="uid://d3yu02futty8n" path="res://Sprites/Rat-Anim-Sheet-Final.png" id="2_s3i4l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xtf2y"]
-height = 34.0
+radius = 8.0
+height = 32.0
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_oe541"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_528oa"]
+atlas = ExtResource("2_s3i4l")
+region = Rect2(0, 192, 64, 64)
 
-[sub_resource type="Animation" id="Animation_7atmx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
+[sub_resource type="AtlasTexture" id="AtlasTexture_iuokf"]
+atlas = ExtResource("2_s3i4l")
+region = Rect2(64, 192, 64, 64)
 
-[sub_resource type="Animation" id="Animation_0xxiv"]
-resource_name = "movement"
-length = 5.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(-0.1, 0, 1, 2, 3, 4, 5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(200, 0), Vector2(400, 0), Vector2(600, 0), Vector2(800, 0), Vector2(1000, 0)]
-}
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffo4h"]
+atlas = ExtResource("2_s3i4l")
+region = Rect2(128, 192, 64, 64)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_mshq3"]
-_data = {
-"RESET": SubResource("Animation_7atmx"),
-"movement": SubResource("Animation_0xxiv")
-}
+[sub_resource type="AtlasTexture" id="AtlasTexture_iht5g"]
+atlas = ExtResource("2_s3i4l")
+region = Rect2(192, 192, 64, 64)
 
-[node name="Rat" type="Area2D"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_15ed6"]
+load_path = "res://.godot/imported/Rat-Anim-Sheet-Final.png-b2699cf9deeabc893ed5f93c21f8e6b3.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thcwn"]
+atlas = SubResource("CompressedTexture2D_15ed6")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7pet"]
+atlas = SubResource("CompressedTexture2D_15ed6")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gm2ns"]
+atlas = SubResource("CompressedTexture2D_15ed6")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx2sk"]
+atlas = SubResource("CompressedTexture2D_15ed6")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_53pkv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_528oa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iuokf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffo4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iht5g")
+}],
+"loop": true,
+"name": &"WalkLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thcwn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7pet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gm2ns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx2sk")
+}],
+"loop": true,
+"name": &"WalkRight",
+"speed": 5.0
+}]
+
+[node name="Rat" type="AnimatableBody2D"]
 script = ExtResource("1_px208")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_xtf2y")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="CollisionShape2D"]
-modulate = Color(0.498039, 0.498039, 0.498039, 1)
-position = Vector2(0.0936408, 0.0170414)
-scale = Vector2(19.9161, 17.0255)
-mesh = SubResource("CapsuleMesh_oe541")
+[node name="Rat" type="AnimatedSprite2D" parent="CollisionShape2D"]
+texture_filter = 1
+position = Vector2(7, 0.999975)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_53pkv")
+animation = &"WalkRight"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_mshq3")
-}
+[node name="Area2D" type="Area2D" parent="."]
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="POV" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2(1, 0)
+scale = Vector2(0.75, 0.75)
+polygon = PackedVector2Array(9, 0, 94, -44, 94, 35)
+
+[connection signal="StartMovement" from="." to="." method="_on_start_movement"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
