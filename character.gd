@@ -33,7 +33,7 @@ func _physics_process(delta):
 			if sqrt((grappleTargets[j].x)^2) > grappleDistance:
 				pass
 		print(grappleTargets[0].position)
-  move_and_slide()
+	move_and_slide()
   
 func _process(_delta):
 	var direction = Input.get_axis("left", "right")
