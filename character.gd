@@ -61,5 +61,5 @@ func _process(delta):
 	if grappleTargets.size() > 0:
 		if not grappleTarget == null:
 			grappleTarget.spriteOn(false)
-		print([Vector2(1,0), Vector2(0,0)].map(distance)
+		print(grappleTargets.map(distance))
 		

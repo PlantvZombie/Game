@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b32p31dpg1p3t" path="res://character.tscn" id="1_et1i1"]
 [ext_resource type="PackedScene" uid="uid://bqdktm4x76lll" path="res://floor.tscn" id="2_monho"]
-[ext_resource type="PackedScene" path="res://grapplingHookTarget.tscn" id="3_bkrv1"]
+[ext_resource type="PackedScene" uid="uid://q0kd76dintc0" path="res://grapplingHookTarget.tscn" id="3_bkrv1"]
 
 [node name="Test" type="Node2D"]
 
