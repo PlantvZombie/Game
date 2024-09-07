@@ -31,3 +31,6 @@ offset_bottom = 646.0
 
 [node name="Rat" parent="." instance=ExtResource("5_fsrq3")]
 position = Vector2(360, 450)
+
+[node name="Floor2" parent="." instance=ExtResource("2_monho")]
+position = Vector2(750, 450)

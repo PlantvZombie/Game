@@ -11,6 +11,7 @@ var right:bool = false
 var Attack:bool = false
 signal AttackTimer
 var AttackComplete:bool = false
+var AfterJump:bool = false
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -21,7 +22,16 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		if velocity.y  > 0:
+			AfterJump = true
+		if !AfterJump:
+			velocity.y += gravity * delta
+		else:
+			velocity.y += gravity * (1.5 *delta)
+		
+	if is_on_floor():
+		AfterJump = false
+		
 
 	# Handle Jump.
 	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
@@ -30,7 +40,7 @@ func _physics_process(delta):
 	if grappleTargets.size() > 0 and not is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
 		var grappleDistance = -1
 		for j in grappleTargets.size():
-			if sqrt((grappleTargets[j].x)^2) > grappleDistance:
+			if sqrt((grappleTargets[j].xa)^2) > grappleDistance:
 				pass
 		print(grappleTargets[0].position)
 	move_and_slide()
