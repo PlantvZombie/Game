@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cxmdasgl0ayr7" path="res://character.tscn" id="1_et1i1"]
 [ext_resource type="PackedScene" uid="uid://562ab754spn5" path="res://floor.tscn" id="2_monho"]
 [ext_resource type="PackedScene" uid="uid://dairswp00r4e" path="res://camera.tscn" id="3_28s2i"]
-[ext_resource type="PackedScene" uid="uid://d2e4i0nkxbsfc" path="res://grappling_hook_target.tscn" id="3_bkrv1"]
+[ext_resource type="PackedScene" uid="uid://b0tbx0k58hj50" path="res://grapple_target.tscn" id="3_t10ss"]
 [ext_resource type="PackedScene" uid="uid://dluf0lkl8gr5l" path="res://rat.tscn" id="5_fsrq3"]
 
 [node name="Test" type="Node2D"]
@@ -13,12 +13,6 @@ position = Vector2(578, 341)
 
 [node name="Floor" parent="." instance=ExtResource("2_monho")]
 position = Vector2(576, 468)
-
-[node name="Grappling hook target" parent="Floor" instance=ExtResource("3_bkrv1")]
-position = Vector2(-18, -3)
-
-[node name="Grappling hook target2" parent="Floor" instance=ExtResource("3_bkrv1")]
-position = Vector2(41, -7)
 
 [node name="Camera" parent="." instance=ExtResource("3_28s2i")]
 position = Vector2(423, 400)
@@ -34,3 +28,9 @@ position = Vector2(360, 450)
 
 [node name="Floor2" parent="." instance=ExtResource("2_monho")]
 position = Vector2(750, 450)
+
+[node name="grappleTarget" parent="." instance=ExtResource("3_t10ss")]
+position = Vector2(771, 408)
+
+[node name="grappleTarget2" parent="." instance=ExtResource("3_t10ss")]
+position = Vector2(413, 357)
