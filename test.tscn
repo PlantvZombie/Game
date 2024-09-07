@@ -30,4 +30,4 @@ offset_right = 1156.0
 offset_bottom = 646.0
 
 [node name="Rat" parent="." instance=ExtResource("5_fsrq3")]
-position = Vector2(361, 447)
+position = Vector2(360, 450)
