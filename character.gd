@@ -8,6 +8,10 @@ var currentTarget
 
 var left:bool = false
 var right:bool = false
+var Attack:bool = false
+signal AttackTimer
+var AttackComplete:bool = false
+var AfterJump:bool = false
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -20,38 +24,67 @@ func _physics_process(delta):
 	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		if velocity.y  > 0:
+			AfterJump = true
+		if !AfterJump:
+			velocity.y += gravity * delta
+		else:
+			velocity.y += gravity * (1.5 *delta)
+		
+	if is_on_floor():
+		AfterJump = false
+		
 
 	# Handle Jump.
 	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
 		velocity.y = JUMP_VELOCITY
-		
 
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * SPEED, 80)
 		if Input.is_action_pressed("left"):
-			anim.play("Run Left")
+			if Input.is_action_just_pressed("click") and !Attack:
+				AttackComplete = false
+				Attack = true
+				anim.play("AttackLeft")
+				AttackTimer.emit()
+			if !Attack:
+				anim.play("Run Left")
 			left = true
 			right = false
+			if AttackComplete:
+				Attack = false
 		else:
-			anim.play("Run Right")
+			if Input.is_action_just_pressed("click") and !Attack:
+				AttackComplete = false
+				Attack = true
+				anim.play("AttackRight")
+				AttackTimer.emit()
+			if Input.is_action_pressed("right") and !Attack:
+				anim.play("Run Right")
 			right = true
 			left = false
+			if AttackComplete:
+				Attack = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, 65)
 
 		if velocity.x == 0 and !left and !right:
 			anim.play("Idle")
-		elif velocity.x == 0 and left:
+		elif velocity.x == 0 and left and !Attack:
 			anim.play("IdleLeft")
-		elif velocity.x == 0 and right:
+		elif velocity.x == 0 and right and !Attack:
 			anim.play("IdleRight")
 	
 	get_node("/root/Global").PlayerPos = self.position
 
-	move_and_slide()
+
+func _on_attack_timer():
+	await get_tree().create_timer(0.9).timeout
+	AttackComplete = true
+
 	
+
 
 
 func _process(delta):
@@ -79,3 +112,4 @@ func find_closest_or_furthest(node: Object, group_name: String, get_closest:= tr
 
 func distance(pos1):
 	return sqrt((pos1.position.x - self.position.x)**2+(pos1.postion.y - self.position.y)**2)
+
