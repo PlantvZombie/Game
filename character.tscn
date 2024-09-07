@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cxmdasgl0ayr7"]
+[gd_scene load_steps=36 format=3 uid="uid://cxmdasgl0ayr7"]
 
 [ext_resource type="Script" path="res://character.gd" id="1_7og8y"]
 [ext_resource type="Texture2D" uid="uid://b6kbdk1u0prcj" path="res://Sprites/FInal-character-Sheet.png" id="2_ilwsr"]
@@ -242,6 +242,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wn0te"]
+size = Vector2(15, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v5gpo"]
+size = Vector2(16, 16)
+
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_7og8y")
 
@@ -251,6 +257,23 @@ shape = SubResource("CapsuleShape2D_8mbu1")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ajwqw")
-animation = &"AttackLeft"
+animation = &"AttackRight"
+frame = 2
+
+[node name="Right" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2(15.5, 2)
+shape = SubResource("RectangleShape2D_wn0te")
+disabled = true
+
+[node name="Left" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+position = Vector2(-18, 2)
+shape = SubResource("RectangleShape2D_v5gpo")
+disabled = true
 
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]
+[connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]
+[connection signal="body_entered" from="Left" to="." method="_on_left_body_entered"]

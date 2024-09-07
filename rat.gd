@@ -8,6 +8,7 @@ var right:bool = false
 var left:bool = false
 var tween
 var FirstRun:bool = true
+var health:int = 10
 
 
 func _physics_process(_delta):
@@ -24,6 +25,8 @@ func _physics_process(_delta):
 		left = false
 		AnimOver = false
 		StartMovement.emit()
+	if health < 1:
+		self.queue_free()
 	move_and_slide()
 
 
