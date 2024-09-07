@@ -4,7 +4,7 @@ const SPEED = 400.0
 
 const JUMP_VELOCITY = -400.0
 var grapplingHook = true
-var currentTarget
+var grappleTargets = []
 
 var left:bool = false
 var right:bool = false
@@ -20,8 +20,6 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
-	
-	
 	# Add the gravity.
 	if not is_on_floor():
 		if velocity.y  > 0:
@@ -38,7 +36,16 @@ func _physics_process(delta):
 	# Handle Jump.
 	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
 		velocity.y = JUMP_VELOCITY
-
+	
+	if grappleTargets.size() > 0 and not is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
+		var grappleDistance = -1
+		for j in grappleTargets.size():
+			if sqrt((grappleTargets[j].xa)^2) > grappleDistance:
+				pass
+		print(grappleTargets[0].position)
+	move_and_slide()
+  
+func _process(_delta):
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * SPEED, 80)
@@ -84,32 +91,8 @@ func _on_attack_timer():
 	AttackComplete = true
 
 	
+func distance(x0, y0, x1, y1):
+	return sqrt((x0 - x1)**2+(y0-y1)**2)
 
 
-
-func _process(delta):
-	if currentTarget != null:
-		currentTarget.turnOn(false)
-	currentTarget = find_closest_or_furthest(self,"targets")
-	if currentTarget != null:
-		currentTarget.turnOn(true)
-	
-
-func find_closest_or_furthest(node: Object, group_name: String, get_closest:= true) -> Object:
-	var target_group = get_tree().get_nodes_in_group(group_name)
-	if str(target_group) != "[]":
-		var distance_away = node.global_transform.origin.distance_to(target_group[0].global_transform.origin)
-		var return_node = target_group[0]
-		for index in target_group.size():
-			var distance = node.global_transform.origin.distance_to(target_group[index].global_transform.origin)
-			if (get_closest && distance < distance_away) or (!get_closest && distance > distance_away):
-				distance_away = distance
-				return_node = target_group[index];
-		return return_node
-	else:
-		
-		return null
-
-func distance(pos1):
-	return sqrt((pos1.position.x - self.position.x)**2+(pos1.postion.y - self.position.y)**2)
 
