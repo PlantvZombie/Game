@@ -9,7 +9,7 @@
 [node name="Test" type="Node2D"]
 
 [node name="Character" parent="." instance=ExtResource("1_et1i1")]
-position = Vector2(578, 341)
+position = Vector2(580, 335)
 
 [node name="Floor" parent="." instance=ExtResource("2_monho")]
 position = Vector2(576, 468)
@@ -23,7 +23,7 @@ z_index = -1
 offset_right = 1156.0
 offset_bottom = 646.0
 
-[node name="Rat" parent="." instance=ExtResource("5_fsrq3")]
+[node name="Rat" parent="." groups=["Enemies"] instance=ExtResource("5_fsrq3")]
 position = Vector2(360, 450)
 
 [node name="Floor2" parent="." instance=ExtResource("2_monho")]
