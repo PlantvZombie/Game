@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvgwirsp504g"]
+
+[ext_resource type="Script" path="res://grapple_target.gd" id="1_u7a6a"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s500s"]
+
+[node name="grappleTarget" type="Node2D" groups=["wa"]]
+script = ExtResource("1_u7a6a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.454902, 0.533333, 1, 1)
+scale = Vector2(15, 15)
+texture = SubResource("PlaceholderTexture2D_s500s")

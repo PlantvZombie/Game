@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b32p31dpg1p3t" path="res://character.tscn" id="1_et1i1"]
 [ext_resource type="PackedScene" uid="uid://bqdktm4x76lll" path="res://floor.tscn" id="2_monho"]
-[ext_resource type="PackedScene" uid="uid://q0kd76dintc0" path="res://grapplingHookTarget.tscn" id="3_bkrv1"]
+[ext_resource type="PackedScene" uid="uid://dvgwirsp504g" path="res://grapple_target.tscn" id="3_t10ss"]
 
 [node name="Test" type="Node2D"]
 
@@ -12,14 +12,15 @@ position = Vector2(578, 341)
 [node name="Floor" parent="." instance=ExtResource("2_monho")]
 position = Vector2(576, 468)
 
-[node name="Grappling hook target" parent="Floor" instance=ExtResource("3_bkrv1")]
-position = Vector2(60, -20)
-
-[node name="Grappling hook target2" parent="Floor" instance=ExtResource("3_bkrv1")]
-position = Vector2(-60, -20)
-
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(0.215686, 0.215686, 0.215686, 1)
 z_index = -1
 offset_right = 1156.0
 offset_bottom = 646.0
+metadata/_edit_lock_ = true
+
+[node name="grappleTarget" parent="." instance=ExtResource("3_t10ss")]
+position = Vector2(710, 412)
+
+[node name="grappleTarget2" parent="." instance=ExtResource("3_t10ss")]
+position = Vector2(426, 434)

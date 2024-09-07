@@ -4,8 +4,7 @@ const SPEED = 400.0
 
 const JUMP_VELOCITY = -400.0
 var grapplingHook = true
-var grappleTargets = []
-var grappleTarget
+var currentTarget
 
 var left:bool = false
 var right:bool = false
@@ -53,13 +52,30 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
-func distance(pos1):
-	return sqrt((pos1.x - self.position.x)**2+(pos1.y - self.position.y)**2)
+
 
 func _process(delta):
+	if currentTarget != null:
+		currentTarget.turnOn(false)
+	currentTarget = find_closest_or_furthest(self,"targets")
+	if currentTarget != null:
+		currentTarget.turnOn(true)
 	
-	if grappleTargets.size() > 0:
-		if not grappleTarget == null:
-			grappleTarget.spriteOn(false)
-		print(grappleTargets.map(distance))
+
+func find_closest_or_furthest(node: Object, group_name: String, get_closest:= true) -> Object:
+	var target_group = get_tree().get_nodes_in_group(group_name)
+	if str(target_group) != "[]":
+		var distance_away = node.global_transform.origin.distance_to(target_group[0].global_transform.origin)
+		var return_node = target_group[0]
+		for index in target_group.size():
+			var distance = node.global_transform.origin.distance_to(target_group[index].global_transform.origin)
+			if (get_closest && distance < distance_away) or (!get_closest && distance > distance_away):
+				distance_away = distance
+				return_node = target_group[index];
+		return return_node
+	else:
 		
+		return null
+
+func distance(pos1):
+	return sqrt((pos1.position.x - self.position.x)**2+(pos1.postion.y - self.position.y)**2)
