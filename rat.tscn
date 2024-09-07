@@ -79,7 +79,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Rat" type="AnimatableBody2D"]
+[node name="Rat" type="CharacterBody2D"]
 script = ExtResource("1_px208")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -94,12 +94,18 @@ scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_53pkv")
 animation = &"WalkRight"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Sight" type="Area2D" parent="."]
 
-[node name="POV" type="CollisionPolygon2D" parent="Area2D"]
+[node name="POV" type="CollisionPolygon2D" parent="Sight"]
 position = Vector2(1, 0)
 scale = Vector2(0.75, 0.75)
 polygon = PackedVector2Array(9, 0, 94, -44, 94, 35)
 
+[node name="CloseDetection" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CloseDetection"]
+position = Vector2(1, 0)
+polygon = PackedVector2Array(7, 0, 18, -6, 18, 5)
+
 [connection signal="StartMovement" from="." to="." method="_on_start_movement"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Sight" to="." method="_on_area_2d_body_entered"]
