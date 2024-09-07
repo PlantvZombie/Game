@@ -31,7 +31,6 @@ func _physics_process(delta):
 		
 	if is_on_floor():
 		AfterJump = false
-		
 
 	# Handle Jump.
 	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
@@ -44,6 +43,11 @@ func _physics_process(delta):
 				pass
 		print(grappleTargets[0].position)
 	move_and_slide()
+
+func _input(event):
+	if event.is_action_released("space") or event.is_action_released("up"):
+		if velocity.y < 0:
+			velocity.y *= 0.5
   
 func _process(_delta):
 	var direction = Input.get_axis("left", "right")
