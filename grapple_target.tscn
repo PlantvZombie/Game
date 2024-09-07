@@ -1,14 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvgwirsp504g"]
+[gd_scene load_steps=3 format=3 uid="uid://b0tbx0k58hj50"]
 
-[ext_resource type="Script" path="res://grapple_target.gd" id="1_u7a6a"]
+[sub_resource type="GDScript" id="GDScript_60mse"]
+script/source = "extends Node2D
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s500s"]
+func _ready():
+	add_to_group(\"targets\")
 
-[node name="grappleTarget" type="Node2D" groups=["wa"]]
-script = ExtResource("1_u7a6a")
+func turnOn(val):
+	$Sprite2D.visible = val
+"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wm5iy"]
+
+[node name="grappleTarget" type="Node2D"]
+script = SubResource("GDScript_60mse")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
-modulate = Color(0.454902, 0.533333, 1, 1)
+modulate = Color(0.67451, 0.886275, 1, 1)
 scale = Vector2(15, 15)
-texture = SubResource("PlaceholderTexture2D_s500s")
+texture = SubResource("PlaceholderTexture2D_wm5iy")
