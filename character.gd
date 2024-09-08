@@ -12,6 +12,7 @@ var left:bool = false
 var right:bool = false
 var Attack:bool = false
 signal AttackTimer
+signal Attacked
 var AttackComplete:bool = false
 var AfterJump:bool = false
 
@@ -22,6 +23,13 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
+	if anim.get_animation() == "AttackRight" and anim.get_frame() == 2:
+		get_node("Right/CollisionShape2D").set_disabled(false)
+	elif anim.get_animation() == "AttackLeft" and anim.get_frame() == 2:
+		get_node("Left/CollisionShape2D").set_disabled(false)
+	else:
+		get_node("Right/CollisionShape2D").set_disabled(true)
+		get_node("Left/CollisionShape2D").set_disabled(true)
 	# Add the gravity.
 	if not is_on_floor():
 		if velocity.y  > 0:
@@ -33,7 +41,6 @@ func _physics_process(delta):
 		
 	if is_on_floor():
 		AfterJump = false
-		
 
 	# Handle Jump.
 	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
@@ -47,6 +54,11 @@ func _physics_process(delta):
 		currentTarget.rope(null)
 	
 	move_and_slide()
+
+func _input(event):
+	if event.is_action_released("space") or event.is_action_released("up"):
+		if velocity.y < 0:
+			velocity.y *= 0.5
   
 func _process(_delta):
 
@@ -85,14 +97,25 @@ func _process(_delta):
 				Attack = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, 65)
-
+		if velocity.x == 0 and Input.is_action_just_pressed("click") and !Attack and left:
+				AttackComplete = false
+				Attack = true
+				anim.play("AttackLeft")
+				AttackTimer.emit()
+				
+		if velocity.x == 0 and Input.is_action_just_pressed("click") and !Attack and right:
+				AttackComplete = false
+				Attack = true
+				anim.play("AttackRight")
+				AttackTimer.emit()
 		if velocity.x == 0 and !left and !right:
 			anim.play("Idle")
 		elif velocity.x == 0 and left and !Attack:
 			anim.play("IdleLeft")
 		elif velocity.x == 0 and right and !Attack:
 			anim.play("IdleRight")
-	
+		if AttackComplete:
+				Attack = false
 	get_node("/root/Global").PlayerPos = self.position
 
 
@@ -119,3 +142,12 @@ func find_closest_or_furthest(node: Object, group_name: String, get_closest:= tr
 		return null
 
 
+func _on_right_body_entered(body):
+	if body.is_in_group("Enemies"):
+		body.health -= 10
+		Attacked.emit()
+
+func _on_left_body_entered(body):
+	if body.is_in_group("Enemies"):
+		body.health -= 10
+		Attacked.emit()
