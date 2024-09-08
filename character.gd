@@ -13,11 +13,16 @@ var right:bool = false
 var Attack:bool = false
 signal AttackTimer
 signal Attacked
+signal hideRope
 var AttackComplete:bool = false
 var AfterJump:bool = false
+
+var tween 
+
 var health:int = 100
 var Dead:bool = false
 signal Death
+
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -26,6 +31,11 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
+
+	
+	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
+		tween = create_tween()
+
 	if health < 1 and !Dead:
 		if right:
 			anim.play("DeathRight")
@@ -39,12 +49,10 @@ func _physics_process(delta):
 			Death.emit()
 			Dead = true
 
-	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null and !Dead:
-		var tween = create_tween()
+	
 		currentTarget.rope(self.global_position)
 		tween.tween_property(self, "position", currentTarget.global_position, .1)
-		await tween.finished
-		currentTarget.rope(null)
+		hideRope.emit(tween)
 	
 	if anim.get_animation() == "AttackRight" and anim.get_frame() == 2:
 		get_node("Right/CollisionShape2D").set_disabled(false)
@@ -168,6 +176,12 @@ func _on_left_body_entered(body):
 		body.health -= 10
 		Attacked.emit()
 
+
+
+func _on_hide_rope():
+	await tween.finished
+	currentTarget.rope(null)
+
 func _on_rat_rat_attack():
 	get_node("AnimationPlayer").play("flash")
 	if !Dead:
@@ -183,3 +197,4 @@ func _on_rat_rat_attack():
 func _on_death():
 	await get_tree().create_timer(1).timeout
 	self.queue_free()
+
