@@ -35,3 +35,4 @@ position = Vector2(413, 357)
 position = Vector2(580, 335)
 
 [connection signal="Attacked" from="Character" to="Rat" method="_on_character_attacked"]
+[connection signal="hideRope" from="Character" to="Character" method="_on_hide_rope"]
