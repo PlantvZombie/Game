@@ -12,6 +12,7 @@ var left:bool = false
 var right:bool = false
 var Attack:bool = false
 signal AttackTimer
+signal Attacked
 var AttackComplete:bool = false
 var AfterJump:bool = false
 
@@ -95,6 +96,7 @@ func _process(_delta):
 				Attack = true
 				anim.play("AttackLeft")
 				AttackTimer.emit()
+				
 		if velocity.x == 0 and Input.is_action_just_pressed("click") and !Attack and right:
 				AttackComplete = false
 				Attack = true
@@ -138,7 +140,9 @@ func find_closest_or_furthest(node: Object, group_name: String, get_closest:= tr
 func _on_right_body_entered(body):
 	if body.is_in_group("Enemies"):
 		body.health -= 10
+		Attacked.emit()
 
 func _on_left_body_entered(body):
 	if body.is_in_group("Enemies"):
 		body.health -= 10
+		Attacked.emit()
