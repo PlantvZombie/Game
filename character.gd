@@ -39,13 +39,19 @@ func _physics_process(delta):
 	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
 		velocity.y = JUMP_VELOCITY
 	
+	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
+		var tween = create_tween()
+		currentTarget.rope(self.global_position)
+		tween.tween_property(self, "position", currentTarget.global_position, .1)
+		await tween.finished
+		currentTarget.rope(null)
+	
 	move_and_slide()
   
 func _process(_delta):
 
 	if currentTarget != null:
 		currentTarget.turnOn(false)
-	print("procces")
 	currentTarget = find_closest_or_furthest(self, "targets")
 	if currentTarget != null:
 		currentTarget.turnOn(true)
@@ -101,7 +107,6 @@ func distance(x0, y0, x1, y1):
 func find_closest_or_furthest(node: Object, group_name: String, get_closest:= true) -> Object:
 	var target_group = get_tree().get_nodes_in_group(group_name)
 	if target_group != null:
-		print("func")
 		var distance_away = node.global_transform.origin.distance_to(target_group[0].global_transform.origin)
 		var return_node = target_group[0]
 		for index in target_group.size():
