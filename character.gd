@@ -23,6 +23,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
+	
+	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
+		var tween = create_tween()
+		currentTarget.rope(self.global_position)
+		tween.tween_property(self, "position", currentTarget.global_position, .1)
+		await tween.finished
+		currentTarget.rope(null)
+	
 	if anim.get_animation() == "AttackRight" and anim.get_frame() == 2:
 		get_node("Right/CollisionShape2D").set_disabled(false)
 	elif anim.get_animation() == "AttackLeft" and anim.get_frame() == 2:

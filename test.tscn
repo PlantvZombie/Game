@@ -8,12 +8,8 @@
 
 [node name="Test" type="Node2D"]
 
-
 [node name="Character" parent="." instance=ExtResource("1_et1i1")]
 position = Vector2(580, 335)
-
-
-
 
 [node name="Floor" parent="." instance=ExtResource("2_monho")]
 position = Vector2(576, 468)
@@ -39,7 +35,4 @@ position = Vector2(771, 408)
 [node name="grappleTarget2" parent="." instance=ExtResource("3_t10ss")]
 position = Vector2(413, 357)
 
-
 [connection signal="Attacked" from="Character" to="Rat" method="_on_character_attacked"]
-
-
