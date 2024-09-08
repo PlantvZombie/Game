@@ -1,12 +1,18 @@
-[gd_scene load_steps=36 format=3 uid="uid://cxmdasgl0ayr7"]
+[gd_scene load_steps=49 format=3 uid="uid://cxmdasgl0ayr7"]
 
 [ext_resource type="Script" path="res://character.gd" id="1_7og8y"]
+[ext_resource type="Shader" path="res://character.gdshader" id="1_g03qj"]
 [ext_resource type="Texture2D" uid="uid://b6kbdk1u0prcj" path="res://Sprites/FInal-character-Sheet.png" id="2_ilwsr"]
 [ext_resource type="Texture2D" uid="uid://cf8icbcritldl" path="res://Sprites/Prototype_Character-Sheet.png" id="2_xiv5k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8mbu1"]
 radius = 11.0
-height = 38.0
+height = 34.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dm4cm"]
+shader = ExtResource("1_g03qj")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t10pn"]
 atlas = ExtResource("2_ilwsr")
@@ -39,6 +45,38 @@ region = Rect2(640, 64, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ftp3"]
 atlas = ExtResource("2_ilwsr")
 region = Rect2(896, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6lyk0"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugwdm"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(448, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejr7q"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(704, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvt45"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(960, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ervmv"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ck0k"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(448, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vp61"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(704, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_200xp"]
+atlas = ExtResource("2_ilwsr")
+region = Rect2(960, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iboj"]
 atlas = ExtResource("2_xiv5k")
@@ -158,6 +196,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6lyk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ugwdm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejr7q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvt45")
+}],
+"loop": true,
+"name": &"DeathLeft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ervmv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ck0k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vp61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_200xp")
+}],
+"loop": true,
+"name": &"DeathRight",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_4iboj")
 }, {
 "duration": 1.0,
@@ -248,6 +320,43 @@ size = Vector2(15, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v5gpo"]
 size = Vector2(16, 16)
 
+[sub_resource type="Animation" id="Animation_bkh2p"]
+resource_name = "flash"
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/Sprite2D:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_gbahg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/Sprite2D:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a155y"]
+_data = {
+"RESET": SubResource("Animation_gbahg"),
+"flash": SubResource("Animation_bkh2p")
+}
+
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_7og8y")
 
@@ -256,9 +365,9 @@ shape = SubResource("CapsuleShape2D_8mbu1")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
 texture_filter = 1
+material = SubResource("ShaderMaterial_dm4cm")
 sprite_frames = SubResource("SpriteFrames_ajwqw")
 animation = &"AttackRight"
-frame = 2
 
 [node name="Right" type="Area2D" parent="."]
 
@@ -274,6 +383,12 @@ position = Vector2(-18, 2)
 shape = SubResource("RectangleShape2D_v5gpo")
 disabled = true
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a155y")
+}
+
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]
+[connection signal="Death" from="." to="." method="_on_death"]
 [connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]
 [connection signal="body_entered" from="Left" to="." method="_on_left_body_entered"]
