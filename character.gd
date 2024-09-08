@@ -15,6 +15,9 @@ signal AttackTimer
 signal Attacked
 var AttackComplete:bool = false
 var AfterJump:bool = false
+var health:int = 100
+var Dead:bool = false
+signal Death
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -23,8 +26,20 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
-	
-	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
+	if health < 1 and !Dead:
+		if right:
+			anim.play("DeathRight")
+			Death.emit()
+			Dead = true
+		elif left:
+			anim.play("DeathLeft")
+			Death.emit()
+			Dead = true
+		else:
+			Death.emit()
+			Dead = true
+
+	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null and !Dead:
 		var tween = create_tween()
 		currentTarget.rope(self.global_position)
 		tween.tween_property(self, "position", currentTarget.global_position, .1)
@@ -51,13 +66,13 @@ func _physics_process(delta):
 		AfterJump = false
 
 	# Handle Jump.
-	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")):
+	if  is_on_floor() and (Input.is_action_just_pressed("up") or Input.is_action_just_pressed("space")) and !Dead:
 		velocity.y = JUMP_VELOCITY
 	
 	move_and_slide()
 
 func _input(event):
-	if event.is_action_released("space") or event.is_action_released("up"):
+	if (event.is_action_released("space") or event.is_action_released("up")) and !Dead:
 		if velocity.y < 0:
 			velocity.y *= 0.5
   
@@ -65,33 +80,32 @@ func _process(_delta):
 
 	if currentTarget != null:
 		currentTarget.turnOn(false)
-	print("procces")
 	currentTarget = find_closest_or_furthest(self, "targets")
 	if currentTarget != null:
 		currentTarget.turnOn(true)
 	
 	var direction = Input.get_axis("left", "right")
-	if direction:
+	if direction and !Dead:
 		velocity.x = move_toward(velocity.x, direction * SPEED, 80)
-		if Input.is_action_pressed("left"):
-			if Input.is_action_just_pressed("click") and !Attack:
+		if Input.is_action_pressed("left") and !Dead:
+			if Input.is_action_just_pressed("click") and !Attack and !Dead:
 				AttackComplete = false
 				Attack = true
 				anim.play("AttackLeft")
 				AttackTimer.emit()
-			if !Attack:
+			if !Attack and !Dead:
 				anim.play("Run Left")
 			left = true
 			right = false
 			if AttackComplete:
 				Attack = false
 		else:
-			if Input.is_action_just_pressed("click") and !Attack:
+			if Input.is_action_just_pressed("click") and !Attack and !Dead:
 				AttackComplete = false
 				Attack = true
 				anim.play("AttackRight")
 				AttackTimer.emit()
-			if Input.is_action_pressed("right") and !Attack:
+			if Input.is_action_pressed("right") and !Attack and !Dead:
 				anim.play("Run Right")
 			right = true
 			left = false
@@ -99,22 +113,22 @@ func _process(_delta):
 				Attack = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, 65)
-		if velocity.x == 0 and Input.is_action_just_pressed("click") and !Attack and left:
+		if velocity.x == 0 and Input.is_action_just_pressed("click") and !Attack and left and !Dead:
 				AttackComplete = false
 				Attack = true
 				anim.play("AttackLeft")
 				AttackTimer.emit()
 				
-		if velocity.x == 0 and Input.is_action_just_pressed("click") and !Attack and right:
+		if velocity.x == 0 and Input.is_action_just_pressed("click") and !Attack and right and !Dead:
 				AttackComplete = false
 				Attack = true
 				anim.play("AttackRight")
 				AttackTimer.emit()
-		if velocity.x == 0 and !left and !right:
+		if velocity.x == 0 and !left and !right and !Dead:
 			anim.play("Idle")
-		elif velocity.x == 0 and left and !Attack:
+		elif velocity.x == 0 and left and !Attack and !Dead:
 			anim.play("IdleLeft")
-		elif velocity.x == 0 and right and !Attack:
+		elif velocity.x == 0 and right and !Attack and !Dead:
 			anim.play("IdleRight")
 		if AttackComplete:
 				Attack = false
@@ -132,13 +146,12 @@ func distance(x0, y0, x1, y1):
 func find_closest_or_furthest(node: Object, group_name: String, get_closest:= true) -> Object:
 	var target_group = get_tree().get_nodes_in_group(group_name)
 	if target_group != null:
-		print("func")
 		var distance_away = node.global_transform.origin.distance_to(target_group[0].global_transform.origin)
 		var return_node = target_group[0]
 		for index in target_group.size():
-			var distance = node.global_transform.origin.distance_to(target_group[index].global_transform.origin)
-			if (get_closest && distance < distance_away) || (!get_closest && distance > distance_away):
-				distance_away = distance
+			var Distance = node.global_transform.origin.distance_to(target_group[index].global_transform.origin)
+			if (get_closest && Distance < distance_away) || (!get_closest && Distance > distance_away):
+				distance_away = Distance
 				return_node = target_group[index];
 		return return_node
 	else:
@@ -154,3 +167,19 @@ func _on_left_body_entered(body):
 	if body.is_in_group("Enemies"):
 		body.health -= 10
 		Attacked.emit()
+
+func _on_rat_rat_attack():
+	get_node("AnimationPlayer").play("flash")
+	if !Dead:
+		Engine.time_scale = 0.07
+		await get_tree().create_timer(0.07 * 0.5).timeout
+		if get_node("/root/Global").HitRight:
+			velocity.x = 10000
+		elif get_node("/root/Global").HitLeft:
+			velocity.x = -10000
+		Engine.time_scale = 1
+
+
+func _on_death():
+	await get_tree().create_timer(1).timeout
+	self.queue_free()
