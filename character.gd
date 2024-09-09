@@ -17,7 +17,7 @@ signal hideRope
 var AttackComplete:bool = false
 var AfterJump:bool = false
 
-var tween 
+var tween
 
 var health:int = 100
 var Dead:bool = false
@@ -35,6 +35,9 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
 		tween = create_tween()
+		currentTarget.rope(self.global_position)
+		tween.tween_property(self, "position", currentTarget.global_position, .1)
+		hideRope.emit()
 
 	if health < 1 and !Dead:
 		if right:
@@ -140,7 +143,7 @@ func _process(_delta):
 			anim.play("IdleRight")
 		if AttackComplete:
 				Attack = false
-	get_node("/root/Global").PlayerPos = self.position
+	get_node("/root/Global").PlayerPos = self.global_position
 
 
 func _on_attack_timer():
