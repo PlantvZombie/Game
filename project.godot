@@ -11,12 +11,18 @@ config_version=5
 [application]
 
 config/name="Game"
+run/main_scene="res://Level1.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://Sprites/icon.svg"
 
 [autoload]
 
 Global="*res://global.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [input]
 
@@ -55,6 +61,11 @@ rClick={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(163, 12),"global_position":Vector2(167, 55),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[physics]
+
+common/physics_ticks_per_second=120
+common/max_physics_steps_per_frame=16
 
 [rendering]
 

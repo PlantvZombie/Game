@@ -368,7 +368,7 @@ frame = 6
 [node name="POV" type="CollisionPolygon2D" parent="Sight"]
 position = Vector2(1, 0)
 scale = Vector2(0.75, 0.75)
-polygon = PackedVector2Array(9, 0, 94, -44, 94, 35)
+polygon = PackedVector2Array(9, 0, 186.667, -86.6667, 186.667, 60)
 
 [node name="CloseDetection" type="Area2D" parent="."]
 
