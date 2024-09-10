@@ -153,7 +153,7 @@ func distance(x0, y0, x1, y1):
 
 func find_closest_or_furthest(node: Object, group_name: String, get_closest:= true) -> Object:
 	var target_group = get_tree().get_nodes_in_group(group_name)
-	if target_group != null:
+	if target_group.size() != 0:
 		var distance_away = node.global_transform.origin.distance_to(target_group[0].global_transform.origin)
 		var return_node = target_group[0]
 		for index in target_group.size():

@@ -24,7 +24,7 @@ func _physics_process(delta):
 	if ChaseMode and !Dead and !Attacking:
 		if !TweenIsBlank:
 			tween.stop()
-		position.x = move_toward(position.x, get_node("/root/Global").PlayerPos.x, 3)
+		position.x = move_toward(position.x, get_node("/root/Global").PlayerPos.x, 1.5)
 		if (position.x - get_node("/root/Global").PlayerPos.x) < 0:
 			anim.play("WalkRight")
 			right = true
