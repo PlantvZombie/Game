@@ -388,6 +388,10 @@ libraries = {
 "": SubResource("AnimationLibrary_a155y")
 }
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -140)
+zoom = Vector2(1.25, 1.25)
+
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]
 [connection signal="Death" from="." to="." method="_on_death"]
 [connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]

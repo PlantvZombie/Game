@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3xu8ftdnjxeo"]
+[gd_scene load_steps=5 format=3 uid="uid://mbdhjuditc57"]
 
 [ext_resource type="Script" path="res://laser.gd" id="1_owflt"]
 
@@ -19,6 +19,7 @@ shape = SubResource("CapsuleShape2D_aorxk")
 [node name="Sprite2D" type="MeshInstance2D" parent="CollisionShape2D"]
 modulate = Color(1, 0, 0, 1)
 position = Vector2(-2.38419e-07, 2.38419e-06)
+rotation = 1.5708
 scale = Vector2(10, 15)
 mesh = SubResource("CapsuleMesh_or0le")
 texture = SubResource("CanvasTexture_maco6")
