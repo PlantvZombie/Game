@@ -24,13 +24,11 @@ offset_bottom = 646.0
 position = Vector2(360, 450)
 
 [node name="grappleTarget" parent="Rat" instance=ExtResource("3_t10ss")]
-visible = false
 
 [node name="Floor2" parent="." instance=ExtResource("2_monho")]
 position = Vector2(750, 450)
 
 [node name="grappleTarget2" parent="." instance=ExtResource("3_t10ss")]
-visible = false
 position = Vector2(413, 357)
 
 [node name="Character" parent="." instance=ExtResource("1_et1i1")]

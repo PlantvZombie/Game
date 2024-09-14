@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bulvlsh7l4d82"]
+[gd_scene load_steps=11 format=3 uid="uid://bulvlsh7l4d82"]
 
 [ext_resource type="Script" path="res://Level1.gd" id="1_xgghn"]
 [ext_resource type="Texture2D" uid="uid://c5dp558dkeajc" path="res://Sprites/Mossy-tiles-Sheet.png" id="2_8ycjo"]
 [ext_resource type="PackedScene" uid="uid://cxmdasgl0ayr7" path="res://character.tscn" id="3_ueeef"]
 [ext_resource type="PackedScene" uid="uid://dluf0lkl8gr5l" path="res://rat.tscn" id="4_wm20k"]
+[ext_resource type="PackedScene" uid="uid://bvkhpyt8vf03o" path="res://grapple_target.tscn" id="5_pg3jr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ggv5s"]
 texture = ExtResource("2_8ycjo")
@@ -466,6 +467,8 @@ position = Vector2(100, 510)
 
 [node name="Rat" parent="." groups=["Enemies"] instance=ExtResource("4_wm20k")]
 position = Vector2(968, 514)
+
+[node name="grappleTarget" parent="Rat" instance=ExtResource("5_pg3jr")]
 
 [node name="Area2D" type="Area2D" parent="."]
 
