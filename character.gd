@@ -5,8 +5,9 @@ const SPEED = 400.0
 const JUMP_VELOCITY = -400.0
 
 var hasGrapplingHook:bool = true
+var grappleRange:float = 700
 var currentTarget 
-
+var result
 
 var left:bool = false
 var right:bool = false
@@ -31,11 +32,17 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
-
-	
-	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
+	if currentTarget != null:
+		var space_state = get_world_2d().direct_space_state
+		var query = PhysicsRayQueryParameters2D.create(self.global_position, currentTarget.global_position)
+		result = space_state.intersect_ray(query)
+	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and str(result.collider).left(str(result.collider).find(":")) != "TileMap":
 		tween = create_tween()
-
+		currentTarget.rope(self.global_position)
+		tween.tween_property(self, "position", currentTarget.global_position, .1)
+		hideRope.emit(tween)
+		
+		
 	if health < 1 and !Dead:
 		if right:
 			anim.play("DeathRight")
@@ -50,9 +57,7 @@ func _physics_process(delta):
 			Dead = true
 
 	
-		currentTarget.rope(self.global_position)
-		tween.tween_property(self, "position", currentTarget.global_position, .1)
-		hideRope.emit(tween)
+		
 	
 	if anim.get_animation() == "AttackRight" and anim.get_frame() == 2:
 		get_node("Right/CollisionShape2D").set_disabled(false)
@@ -89,7 +94,7 @@ func _process(_delta):
 	if currentTarget != null:
 		currentTarget.turnOn(false)
 	currentTarget = find_closest_or_furthest(self, "targets")
-	if currentTarget != null:
+	if currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange:
 		currentTarget.turnOn(true)
 	
 	var direction = Input.get_axis("left", "right")
@@ -148,8 +153,8 @@ func _on_attack_timer():
 	AttackComplete = true
 
 	
-func distance(x0, y0, x1, y1):
-	return sqrt((x0 - x1)**2+(y0-y1)**2)
+func distance(pos0, pos1):
+	return sqrt((pos0.x - pos1.x)**2+(pos0.y-pos1.x)**2)
 
 func find_closest_or_furthest(node: Object, group_name: String, get_closest:= true) -> Object:
 	var target_group = get_tree().get_nodes_in_group(group_name)
