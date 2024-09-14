@@ -36,11 +36,12 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
-if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
-	if currentTarget != null:
-		var space_state = get_world_2d().direct_space_state
-		var query = PhysicsRayQueryParameters2D.create(self.global_position, currentTarget.global_position)
-		result = space_state.intersect_ray(query)
+	get_node("ProgressBar").value = health
+	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
+		if currentTarget != null:
+			var space_state = get_world_2d().direct_space_state
+			var query = PhysicsRayQueryParameters2D.create(self.global_position, currentTarget.global_position)
+			result = space_state.intersect_ray(query)
 	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and str(result.collider).left(str(result.collider).find(":")) != "TileMap":
 		tween = create_tween()
 		currentTarget.rope(self.global_position)
