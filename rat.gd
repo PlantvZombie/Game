@@ -115,7 +115,7 @@ func _on_character_attacked():
 
 func _on_right_body_entered(body):
 	if body.name == "Character":
-		body.health -= 10
+		body.health -= 40
 		get_node("/root/Global").HitRight = true
 		get_node("/root/Global").HitLeft = false
 		RatAttack.emit()
@@ -123,7 +123,7 @@ func _on_right_body_entered(body):
 
 func _on_left_body_entered(body):
 	if body.name == "Character":
-		body.health -= 10
+		body.health -= 40
 		get_node("/root/Global").HitRight = false
 		get_node("/root/Global").HitLeft = true
 		RatAttack.emit()

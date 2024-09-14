@@ -392,6 +392,15 @@ libraries = {
 position = Vector2(0, -140)
 zoom = Vector2(1.25, 1.25)
 
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -18.0
+offset_top = -23.0
+offset_right = 18.0
+offset_bottom = -18.0
+step = 1.0
+value = 1.0
+show_percentage = false
+
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]
 [connection signal="Death" from="." to="." method="_on_death"]
 [connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]
