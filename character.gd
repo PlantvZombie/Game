@@ -50,10 +50,12 @@ func _physics_process(delta):
 		
 	if health < 1 and !Dead:
 		if right:
+			get_node("Death").play()
 			anim.play("DeathRight")
 			Death.emit()
 			Dead = true
 		elif left:
+			get_node("Death").play()
 			anim.play("DeathLeft")
 			Death.emit()
 			Dead = true
@@ -64,6 +66,11 @@ func _physics_process(delta):
 		currentTarget.rope(self.global_position)
 		tween.tween_property(self, "position", currentTarget.global_position, .1)
 		hideRope.emit(tween)
+
+	if anim.get_animation() == "AttackRight" and anim.get_frame() == 1:
+		get_node("Attack").play()
+	elif anim.get_animation() == "AttackLeft" and anim.get_frame() == 1:
+		get_node("Attack").play()
 
 	if anim.get_animation() == "AttackRight" and anim.get_frame() == 2:
 		get_node("Right/CollisionShape2D").set_disabled(false)
@@ -201,6 +208,7 @@ func _on_rat_rat_attack():
 		elif get_node("/root/Global").HitLeft:
 			velocity.x = -10000
 		Engine.time_scale = 1
+		get_node("Hurt").play()
 
 
 func _on_death():

@@ -1,9 +1,12 @@
-[gd_scene load_steps=49 format=3 uid="uid://cxmdasgl0ayr7"]
+[gd_scene load_steps=52 format=3 uid="uid://cxmdasgl0ayr7"]
 
 [ext_resource type="Script" path="res://character.gd" id="1_7og8y"]
 [ext_resource type="Shader" path="res://character.gdshader" id="1_g03qj"]
 [ext_resource type="Texture2D" uid="uid://b6kbdk1u0prcj" path="res://Sprites/FInal-character-Sheet.png" id="2_ilwsr"]
 [ext_resource type="Texture2D" uid="uid://cf8icbcritldl" path="res://Sprites/Prototype_Character-Sheet.png" id="2_xiv5k"]
+[ext_resource type="AudioStream" uid="uid://yd2yy3nwqbe" path="res://Sounds/simple-zaps-48138-[AudioTrimmer.com].mp3" id="5_r04vu"]
+[ext_resource type="AudioStream" uid="uid://bacm5w1lx8uto" path="res://Sounds/homemadeoof-47509.mp3" id="6_d07h4"]
+[ext_resource type="AudioStream" uid="uid://bgeuwwefmjiy3" path="res://Sounds/desperate-shout-106691.mp3" id="7_b66xk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8mbu1"]
 radius = 11.0
@@ -400,6 +403,16 @@ offset_bottom = -18.0
 step = 1.0
 value = 1.0
 show_percentage = false
+
+[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_r04vu")
+max_polyphony = 2
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_d07h4")
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_b66xk")
 
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]
 [connection signal="Death" from="." to="." method="_on_death"]

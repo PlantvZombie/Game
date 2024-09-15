@@ -39,10 +39,12 @@ func _physics_process(delta):
 			get_node("CloseDetection").set_rotation(PI)
 	if health < 1 and !Dead:
 		if right:
+			get_node("Death").play()
 			anim.play("DeathRight")
 			Death.emit()
 			Dead = true
 		elif left:
+			get_node("Death").play()
 			anim.play("DeathLeft")
 			Death.emit()
 			Dead = true
@@ -112,6 +114,7 @@ func _on_character_attacked():
 		Engine.time_scale = 0.07
 		await get_tree().create_timer(0.07 * 0.3).timeout
 		Engine.time_scale = 1
+	get_node("Hurt").play()
 
 func _on_right_body_entered(body):
 	if body.name == "Character":
@@ -144,3 +147,15 @@ func _on_close_detection_body_entered(body):
 			await get_tree().create_timer(1.4).timeout
 			Attacking = false
 			get_node("/root/Global").HitLeft = false
+
+
+func _on_sound_area_body_entered(body):
+	if body.name == "Character":
+		get_node("SoundArea/AudioStreamPlayer2D").set_stream_paused(false)
+		get_node("SoundArea/AudioStreamPlayer2D").play()
+
+
+func _on_sound_area_body_exited(body):
+	if body.name == "Character":
+		get_node("SoundArea/AudioStreamPlayer2D").set_stream_paused(true)
+
