@@ -8,9 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://bacm5w1lx8uto" path="res://Sounds/homemadeoof-47509.mp3" id="6_d07h4"]
 [ext_resource type="AudioStream" uid="uid://bgeuwwefmjiy3" path="res://Sounds/desperate-shout-106691.mp3" id="7_b66xk"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8mbu1"]
-radius = 11.0
-height = 34.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7j4op"]
+size = Vector2(23, 28)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dm4cm"]
 shader = ExtResource("1_g03qj")
@@ -364,7 +363,7 @@ _data = {
 script = ExtResource("1_7og8y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_8mbu1")
+shape = SubResource("RectangleShape2D_7j4op")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
 texture_filter = 1
@@ -396,6 +395,7 @@ position = Vector2(0, -140)
 zoom = Vector2(1.25, 1.25)
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(1, 0, 0, 1)
 offset_left = -18.0
 offset_top = -23.0
 offset_right = 18.0
