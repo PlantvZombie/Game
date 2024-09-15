@@ -4,8 +4,8 @@ const SPEED = 400.0
 
 const JUMP_VELOCITY = -400.0
 
-var hasGrapplingHook:bool = true
-var grappleRange:float = 700
+var hasGrapplingHook:bool = false
+var grappleRange:float = 100000
 var currentTarget 
 var result
 
@@ -94,7 +94,10 @@ func _process(_delta):
 	if currentTarget != null:
 		currentTarget.turnOn(false)
 	currentTarget = find_closest_or_furthest(self, "targets")
-	if currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange:
+	if currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and hasGrapplingHook:
+		print(currentTarget.global_position)
+		print(self.global_position)
+		print(distance(self.global_position, currentTarget.global_position))
 		currentTarget.turnOn(true)
 	
 	var direction = Input.get_axis("left", "right")

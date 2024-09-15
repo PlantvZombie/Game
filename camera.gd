@@ -1,5 +1,6 @@
 extends StaticBody2D
 
+
 var laser = preload("res://laser.tscn")
 var startpos:Vector2
 var endpos:Vector2

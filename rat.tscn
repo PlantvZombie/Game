@@ -1,6 +1,7 @@
-[gd_scene load_steps=48 format=3 uid="uid://dluf0lkl8gr5l"]
+[gd_scene load_steps=49 format=3 uid="uid://dluf0lkl8gr5l"]
 
 [ext_resource type="Script" path="res://rat.gd" id="1_px208"]
+[ext_resource type="PackedScene" uid="uid://bvkhpyt8vf03o" path="res://grapple_target.tscn" id="2_njgks"]
 [ext_resource type="Texture2D" uid="uid://d3yu02futty8n" path="res://Sprites/Rat-Anim-Sheet-Final.png" id="2_s3i4l"]
 [ext_resource type="Shader" path="res://rat.gdshader" id="2_vnjyq"]
 
@@ -394,6 +395,8 @@ disabled = true
 position = Vector2(-16, -2)
 shape = SubResource("RectangleShape2D_3y4s2")
 disabled = true
+
+[node name="grappleTarget" parent="." instance=ExtResource("2_njgks")]
 
 [connection signal="Death" from="." to="." method="_on_death"]
 [connection signal="StartMovement" from="." to="." method="_on_start_movement"]
