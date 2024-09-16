@@ -95,9 +95,6 @@ func _process(_delta):
 		currentTarget.turnOn(false)
 	currentTarget = find_closest_or_furthest(self, "targets")
 	if currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and hasGrapplingHook:
-		print(currentTarget.global_position)
-		print(self.global_position)
-		print(distance(self.global_position, currentTarget.global_position))
 		currentTarget.turnOn(true)
 	
 	var direction = Input.get_axis("left", "right")

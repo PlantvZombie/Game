@@ -6,6 +6,7 @@ var startpos:Vector2
 var endpos:Vector2
 var speed = 2
 var direction = 1
+@export var Rotation:int = 1
 
 
 func _on_area_2d_body_entered(body):
@@ -14,6 +15,7 @@ func _on_area_2d_body_entered(body):
 		var Laser = laser.instantiate()
 		call_deferred("add_child", Laser)
 		Laser.target = body
+		Laser.direction = Rotation
 		remove_child(Laser)
 
 func _process(delta):

@@ -6,7 +6,7 @@
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_07q2g"]
 
-[node name="Area2D" type="Area2D"]
+[node name="grappleHookUpgrade" type="Area2D"]
 script = ExtResource("1_1tos8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

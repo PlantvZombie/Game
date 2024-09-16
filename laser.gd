@@ -5,7 +5,7 @@ var target
 var slope
 var negativeX
 var negativeY
-var direction = abs(rotation - 180.1)/(rotation - 180.1)
+var direction
 
 func _on_body_entered(body):
 	if body.name == "Character":
