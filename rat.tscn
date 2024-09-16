@@ -396,8 +396,6 @@ position = Vector2(-16, -2)
 shape = SubResource("RectangleShape2D_3y4s2")
 disabled = true
 
-[node name="grappleTarget" parent="." instance=ExtResource("2_njgks")]
-
 [connection signal="Death" from="." to="." method="_on_death"]
 [connection signal="StartMovement" from="." to="." method="_on_start_movement"]
 [connection signal="body_entered" from="Sight" to="." method="_on_area_2d_body_entered"]
