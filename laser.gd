@@ -8,7 +8,7 @@ var negativeY
 
 func _on_body_entered(body):
 	if body.name == "Character":
-		get_tree().change_scene_to_file("res://test.tscn")
+		body.health -= 10
 
 func _ready():
 	target = target.position

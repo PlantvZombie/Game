@@ -63,10 +63,6 @@ func _physics_process(delta):
 			Death.emit()
 			Dead = true
 
-		currentTarget.rope(self.global_position)
-		tween.tween_property(self, "position", currentTarget.global_position, .1)
-		hideRope.emit(tween)
-
 	if anim.get_animation() == "AttackRight" and anim.get_frame() == 1:
 		get_node("Attack").play()
 	elif anim.get_animation() == "AttackLeft" and anim.get_frame() == 1:
@@ -212,6 +208,6 @@ func _on_rat_rat_attack():
 
 
 func _on_death():
-	await get_tree().create_timer(1).timeout
-	self.queue_free()
+	await get_tree().create_timer(2).timeout
+	get_tree().change_scene_to_file("res://Level1.tscn")
 
