@@ -186,6 +186,8 @@ func _on_left_body_entered(body):
 func _on_hide_rope():
 	await tween.finished
 	currentTarget.rope(null)
+	print("wa")
+	position.y = 0
 
 func _on_rat_rat_attack():
 	get_node("AnimationPlayer").play("flash")

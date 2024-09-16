@@ -389,7 +389,7 @@ libraries = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -140)
+position = Vector2(0, -60)
 zoom = Vector2(1.25, 1.25)
 
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]

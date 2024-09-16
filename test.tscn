@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://562ab754spn5" path="res://floor.tscn" id="2_monho"]
 [ext_resource type="PackedScene" uid="uid://bbgghyp6fjrwr" path="res://camera.tscn" id="3_28s2i"]
 [ext_resource type="PackedScene" uid="uid://dluf0lkl8gr5l" path="res://rat.tscn" id="5_fsrq3"]
-[ext_resource type="PackedScene" uid="uid://cgiceoecuviy6" path="res://grappleHookUpgrade.tscn" id="5_x54fg"]
+[ext_resource type="PackedScene" path="res://grappleHookUpgrade.tscn" id="5_x54fg"]
 
 [node name="Test" type="Node2D"]
 
