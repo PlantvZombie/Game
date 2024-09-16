@@ -5,6 +5,7 @@ var target
 var slope
 var negativeX
 var negativeY
+var direction
 
 func _on_body_entered(body):
 	if body.name == "Character":
