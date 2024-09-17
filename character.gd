@@ -173,12 +173,12 @@ func find_closest_or_furthest(node: Object, group_name: String, get_closest:= tr
 
 
 func _on_right_body_entered(body):
-	if body.is_in_group("Enemies"):
+	if body.name.left(3) == "Rat":
 		body.health -= 10
 		Attacked.emit()
 
 func _on_left_body_entered(body):
-	if body.is_in_group("Enemies"):
+	if body.name.left(3) == "Rat":
 		body.health -= 10
 		Attacked.emit()
 
@@ -188,6 +188,9 @@ func _on_left_body_entered(body):
 
 
 func _on_rat_rat_attack():
+	ratAtk()
+
+func ratAtk():
 	get_node("AnimationPlayer").play("flash")
 	if !Dead:
 		Engine.time_scale = 0.07
@@ -198,7 +201,6 @@ func _on_rat_rat_attack():
 			velocity.x = -10000
 		Engine.time_scale = 1
 
-
 func _on_death():
 	await get_tree().create_timer(1).timeout
 	self.queue_free()
@@ -208,5 +210,28 @@ func _on_death():
 func _on_hide_rope():
 	await tween.finished
 	currentTarget.rope(null)
-	print("wa")
 	position.y = position.y - 10
+
+
+func _on_rat_2_rat_attack():
+	ratAtk()
+
+
+func _on_rat_3_rat_attack():
+	ratAtk()
+
+
+func _on_rat_8_rat_attack():
+	ratAtk()
+
+
+func _on_rat_5_rat_attack():
+	ratAtk()
+
+
+func _on_rat_6_rat_attack():
+	ratAtk()
+
+
+func _on_rat_7_rat_attack():
+	ratAtk()

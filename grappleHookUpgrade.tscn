@@ -1,10 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1eybisgfgakj"]
+[gd_scene load_steps=4 format=3 uid="uid://b7em00sti4522"]
 
 [ext_resource type="Script" path="res://grappleHookUpgrade.gd" id="1_1tos8"]
+[ext_resource type="Texture2D" uid="uid://c4h81i81ey2i4" path="res://Sprites/gpu.png" id="2_giqff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7clv"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_07q2g"]
 
 [node name="grappleHookUpgrade" type="Area2D"]
 script = ExtResource("1_1tos8")
@@ -13,8 +12,9 @@ script = ExtResource("1_1tos8")
 shape = SubResource("RectangleShape2D_x7clv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(20, 20)
-texture = SubResource("PlaceholderTexture2D_07q2g")
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_giqff")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
