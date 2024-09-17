@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bulvlsh7l4d82"]
+[gd_scene load_steps=12 format=3 uid="uid://b14q265ydgus8"]
 
 [ext_resource type="Texture2D" uid="uid://c5dp558dkeajc" path="res://Sprites/Mossy-tiles-Sheet.png" id="2_8ycjo"]
 [ext_resource type="PackedScene" uid="uid://cxmdasgl0ayr7" path="res://character.tscn" id="3_ueeef"]
-[ext_resource type="PackedScene" uid="uid://dluf0lkl8gr5l" path="res://rat.tscn" id="4_wm20k"]
+[ext_resource type="PackedScene" path="res://rat.tscn" id="4_wm20k"]
 [ext_resource type="PackedScene" uid="uid://b1eybisgfgakj" path="res://grappleHookUpgrade.tscn" id="6_d1dx1"]
 [ext_resource type="PackedScene" uid="uid://db2u8i1iwo71q" path="res://death_box.tscn" id="7_0ct3d"]
 [ext_resource type="PackedScene" uid="uid://bbgghyp6fjrwr" path="res://camera.tscn" id="7_1f16s"]
