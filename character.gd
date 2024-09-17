@@ -4,7 +4,7 @@ const SPEED = 400.0
 
 const JUMP_VELOCITY = -400.0
 
-var hasGrapplingHook:bool = false
+@export var hasGrapplingHook:bool = false
 var grappleRange:float = 100000
 var currentTarget 
 var result
@@ -36,11 +36,12 @@ func _physics_process(delta):
 		var space_state = get_world_2d().direct_space_state
 		var query = PhysicsRayQueryParameters2D.create(self.global_position, currentTarget.global_position)
 		result = space_state.intersect_ray(query)
-	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and str(result.collider).left(str(result.collider).find(":")) != "TileMap":
-		tween = create_tween()
-		currentTarget.rope(self.global_position)
-		tween.tween_property(self, "position", currentTarget.global_position, .1)
-		hideRope.emit(tween)
+		if Input.is_action_just_pressed("rClick") and hasGrapplingHook and distance(self.global_position, currentTarget.global_position) < grappleRange and str(result.collider).left(str(result.collider).find(":")) != "TileMap" and str(result.collider).left(str(result.collider).find(":")) != "deathBox":
+			tween = create_tween()
+			currentTarget.rope(self.global_position)
+			tween.tween_property(self, "position", currentTarget.global_position, .1)
+			print("waa1")
+			hideRope.emit()
 		
 		
 	if health < 1 and !Dead:
@@ -183,11 +184,8 @@ func _on_left_body_entered(body):
 
 
 
-func _on_hide_rope():
-	await tween.finished
-	currentTarget.rope(null)
-	print("wa")
-	position.y = 0
+
+
 
 func _on_rat_rat_attack():
 	get_node("AnimationPlayer").play("flash")
@@ -205,3 +203,10 @@ func _on_death():
 	await get_tree().create_timer(1).timeout
 	self.queue_free()
 
+
+
+func _on_hide_rope():
+	await tween.finished
+	currentTarget.rope(null)
+	print("wa")
+	position.y = position.y - 10

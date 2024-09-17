@@ -359,6 +359,7 @@ _data = {
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_7og8y")
+hasGrapplingHook = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_8mbu1")
@@ -394,5 +395,6 @@ zoom = Vector2(1.25, 1.25)
 
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]
 [connection signal="Death" from="." to="." method="_on_death"]
+[connection signal="hideRope" from="." to="." method="_on_hide_rope"]
 [connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]
 [connection signal="body_entered" from="Left" to="." method="_on_left_body_entered"]
