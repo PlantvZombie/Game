@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bbgghyp6fjrwr"]
+[gd_scene load_steps=5 format=3 uid="uid://bbgghyp6fjrwr"]
 
 [ext_resource type="Script" path="res://camera.gd" id="1_2bl0g"]
 [ext_resource type="Texture2D" uid="uid://bqj6jki7ybuce" path="res://Sprites/Cone.png" id="1_fobc6"]
-[ext_resource type="PackedScene" uid="uid://bvkhpyt8vf03o" path="res://grapple_target.tscn" id="3_ijc6u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_irwfe"]
 radius = 7.0
@@ -34,7 +33,5 @@ texture = ExtResource("1_fobc6")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PackedVector2Array(14, -1, 263, -126, 263, 120)
-
-[node name="grappleTarget" parent="." instance=ExtResource("3_ijc6u")]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
