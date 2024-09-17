@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1eybisgfgakj"]
+
+[ext_resource type="Script" path="res://grappleHookUpgrade.gd" id="1_1tos8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7clv"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_07q2g"]
+
+[node name="grappleHookUpgrade" type="Area2D"]
+script = ExtResource("1_1tos8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_x7clv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(20, 20)
+texture = SubResource("PlaceholderTexture2D_07q2g")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
