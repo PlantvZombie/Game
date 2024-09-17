@@ -361,6 +361,7 @@ _data = {
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_7og8y")
+hasGrapplingHook = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7j4op")
@@ -391,7 +392,7 @@ libraries = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -140)
+position = Vector2(0, -60)
 zoom = Vector2(1.25, 1.25)
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
@@ -416,5 +417,6 @@ stream = ExtResource("7_b66xk")
 
 [connection signal="AttackTimer" from="." to="." method="_on_attack_timer"]
 [connection signal="Death" from="." to="." method="_on_death"]
+[connection signal="hideRope" from="." to="." method="_on_hide_rope"]
 [connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]
 [connection signal="body_entered" from="Left" to="." method="_on_left_body_entered"]

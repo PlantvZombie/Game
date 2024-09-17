@@ -4,8 +4,8 @@ const SPEED = 400.0
 
 const JUMP_VELOCITY = -400.0
 
-var hasGrapplingHook:bool = true
-var grappleRange:float = 700
+@export var hasGrapplingHook:bool = false
+var grappleRange:float = 100000
 var currentTarget 
 
 var result
@@ -36,17 +36,20 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
+
 	get_node("ProgressBar").value = health
-	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null:
-		if currentTarget != null:
-			var space_state = get_world_2d().direct_space_state
-			var query = PhysicsRayQueryParameters2D.create(self.global_position, currentTarget.global_position)
-			result = space_state.intersect_ray(query)
-	if Input.is_action_just_pressed("rClick") and hasGrapplingHook and currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and str(result.collider).left(str(result.collider).find(":")) != "TileMap":
-		tween = create_tween()
-		currentTarget.rope(self.global_position)
-		tween.tween_property(self, "position", currentTarget.global_position, .1)
-		hideRope.emit(tween)
+
+
+	if currentTarget != null:
+		var space_state = get_world_2d().direct_space_state
+		var query = PhysicsRayQueryParameters2D.create(self.global_position, currentTarget.global_position)
+		result = space_state.intersect_ray(query)
+		if Input.is_action_just_pressed("rClick") and hasGrapplingHook and distance(self.global_position, currentTarget.global_position) < grappleRange and str(result.collider).left(str(result.collider).find(":")) != "TileMap" and str(result.collider).left(str(result.collider).find(":")) != "deathBox":
+			tween = create_tween()
+			currentTarget.rope(self.global_position)
+			tween.tween_property(self, "position", currentTarget.global_position, .1)
+			hideRope.emit()
+
 		
 	if health < 1 and !Dead:
 		if right:
@@ -107,7 +110,7 @@ func _process(_delta):
 		anim.play("AttackRight")
 		anim.set_frame(frame)
 	currentTarget = find_closest_or_furthest(self, "targets")
-	if currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange:
+	if currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and hasGrapplingHook:
 		currentTarget.turnOn(true)
 	var direction = Input.get_axis("left", "right")
 	if direction and !Dead:
@@ -190,9 +193,6 @@ func _on_left_body_entered(body):
 		body.health -= 10
 		Attacked.emit()
 
-func _on_hide_rope():
-	await tween.finished
-	currentTarget.rope(null)
 
 func _on_rat_rat_attack():
 	get_node("AnimationPlayer").play("flash")
@@ -211,3 +211,10 @@ func _on_death():
 	await get_tree().create_timer(2).timeout
 	get_tree().change_scene_to_file("res://Level1.tscn")
 
+
+
+func _on_hide_rope():
+	await tween.finished
+	currentTarget.rope(null)
+	print("wa")
+	position.y = position.y - 10
