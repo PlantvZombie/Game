@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://boa3mmb261d61"]
+
+[ext_resource type="AudioStream" uid="uid://clx6edfvgdwt2" path="res://Sounds/sewer-drain-86329.mp3" id="1_vijya"]
+[ext_resource type="AudioStream" uid="uid://bf7nnv78n4msn" path="res://Sounds/Tenebrous Brothers Carnival - Snake Lady.mp3" id="2_wrwhg"]
+
+[node name="sound" type="Node2D"]
+
+[node name="Ambience" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_vijya")
+autoplay = true
+max_distance = 1e+06
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_wrwhg")
+volume_db = -15.0
+autoplay = true

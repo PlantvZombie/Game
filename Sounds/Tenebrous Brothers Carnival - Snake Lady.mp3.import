@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bf7nnv78n4msn"
+path="res://.godot/imported/Tenebrous Brothers Carnival - Snake Lady.mp3-d096f3e16a942b5a5ce33b309b271d58.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Tenebrous Brothers Carnival - Snake Lady.mp3"
+dest_files=["res://.godot/imported/Tenebrous Brothers Carnival - Snake Lady.mp3-d096f3e16a942b5a5ce33b309b271d58.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

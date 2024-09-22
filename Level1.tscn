@@ -1,11 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://bulvlsh7l4d82"]
+[gd_scene load_steps=14 format=3 uid="uid://b14q265ydgus8"]
 
-[ext_resource type="Texture2D" uid="uid://dw7fod6wgd0ys" path="res://Sprites/L1_Background.png" id="1_6q25i"]
+[ext_resource type="Texture2D" path="res://Sprites/L1_Background.png" id="1_6q25i"]
 [ext_resource type="Texture2D" uid="uid://c5dp558dkeajc" path="res://Sprites/Mossy-tiles-Sheet.png" id="2_8ycjo"]
 [ext_resource type="PackedScene" uid="uid://cxmdasgl0ayr7" path="res://character.tscn" id="3_ueeef"]
 [ext_resource type="PackedScene" uid="uid://dluf0lkl8gr5l" path="res://rat.tscn" id="4_wm20k"]
-[ext_resource type="PackedScene" uid="uid://b7em00sti4522" path="res://grappleHookUpgrade.tscn" id="6_d1dx1"]
-[ext_resource type="PackedScene" path="res://death_box.tscn" id="7_0ct3d"]
+[ext_resource type="PackedScene" uid="uid://boa3mmb261d61" path="res://sound.tscn" id="6_an5xg"]
+[ext_resource type="PackedScene" path="res://grappleHookUpgrade.tscn" id="6_d1dx1"]
+[ext_resource type="PackedScene" uid="uid://cba0jwbi1en5k" path="res://death_box.tscn" id="7_0ct3d"]
 [ext_resource type="PackedScene" uid="uid://bbgghyp6fjrwr" path="res://camera.tscn" id="7_1f16s"]
 
 [sub_resource type="GDScript" id="GDScript_iwhlu"]
@@ -625,21 +626,25 @@ scale = Vector2(73.0253, -1.67426)
 position = Vector2(1707, 593)
 scale = Vector2(1.79176, -21.1288)
 
-[node name="winboxmoment" type="Label" parent="."]
+[node name="labelFolder" type="Node2D" parent="."]
+position = Vector2(454, -46)
+
+[node name="Start" type="Label" parent="labelFolder"]
 texture_filter = 1
-offset_left = 3811.0
-offset_top = 1345.0
-offset_right = 4127.0
-offset_bottom = 1371.0
+offset_right = 316.0
+offset_bottom = 26.0
+text = "I need to get away."
+
+[node name="winboxmoment" type="Label" parent="labelFolder"]
+texture_filter = 1
+offset_left = 3357.0
+offset_top = 1391.0
+offset_right = 3673.0
+offset_bottom = 1417.0
 text = "They can't find me here. I'm finally safe"
 
-[node name="winboxmoment2" type="Label" parent="."]
-texture_filter = 1
-offset_left = 454.0
-offset_top = -46.0
-offset_right = 770.0
-offset_bottom = -20.0
-text = "I need to get away."
+[node name="sound" parent="." instance=ExtResource("6_an5xg")]
+position = Vector2(454, -46)
 
 [connection signal="Attacked" from="Character" to="ratFolder/Rat2" method="_on_character_attacked"]
 [connection signal="Attacked" from="Character" to="ratFolder/Rat3" method="_on_character_attacked"]
