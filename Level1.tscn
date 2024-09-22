@@ -1,12 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bulvlsh7l4d82"]
+[gd_scene load_steps=11 format=3 uid="uid://b14q265ydgus8"]
 
 [ext_resource type="Script" path="res://Level1.gd" id="1_xgghn"]
 [ext_resource type="Texture2D" uid="uid://c5dp558dkeajc" path="res://Sprites/Mossy-tiles-Sheet.png" id="2_8ycjo"]
 [ext_resource type="PackedScene" uid="uid://cxmdasgl0ayr7" path="res://character.tscn" id="3_ueeef"]
 [ext_resource type="PackedScene" uid="uid://dluf0lkl8gr5l" path="res://rat.tscn" id="4_wm20k"]
 [ext_resource type="PackedScene" uid="uid://bvkhpyt8vf03o" path="res://grapple_target.tscn" id="5_pg3jr"]
-[ext_resource type="AudioStream" uid="uid://clx6edfvgdwt2" path="res://Sounds/sewer-drain-86329.mp3" id="6_h4ii6"]
-[ext_resource type="AudioStream" uid="uid://bf7nnv78n4msn" path="res://Sounds/Tenebrous Brothers Carnival - Snake Lady.mp3" id="7_1m5jp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ggv5s"]
 texture = ExtResource("2_8ycjo")
@@ -487,16 +485,6 @@ position = Vector2(502, 495)
 scale = Vector2(2, 2)
 color = Color(0.705882, 0.705882, 0, 1)
 texture = SubResource("GradientTexture2D_sgceb")
-
-[node name="Ambience" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_h4ii6")
-autoplay = true
-max_distance = 1e+06
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_1m5jp")
-volume_db = -15.0
-autoplay = true
 
 [connection signal="Attacked" from="Character" to="Rat" method="_on_character_attacked"]
 [connection signal="RatAttack" from="Rat" to="Character" method="_on_rat_rat_attack"]
