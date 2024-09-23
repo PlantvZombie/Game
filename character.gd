@@ -12,6 +12,8 @@ var result
 var left:bool = false
 var right:bool = false
 var Attack:bool = false
+var frame:int 
+signal Turned
 signal AttackTimer
 signal Attacked
 signal hideRope
@@ -32,6 +34,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim = get_node("CollisionShape2D/Sprite2D")
 
 func _physics_process(delta):
+	get_node("ProgressBar").value = health
 	if currentTarget != null:
 		var space_state = get_world_2d().direct_space_state
 		var query = PhysicsRayQueryParameters2D.create(self.global_position, currentTarget.global_position)
@@ -97,6 +100,15 @@ func _process(_delta):
 	currentTarget = find_closest_or_furthest(self, "targets")
 	if currentTarget != null and distance(self.global_position, currentTarget.global_position) < grappleRange and hasGrapplingHook:
 		currentTarget.turnOn(true)
+	
+	if anim.get_animation() == "AttackRight" and !right:
+		frame = anim.get_frame()
+		anim.play("AttackLeft")
+		anim.set_frame(frame)
+	if anim.get_animation() == "AttackLeft" and !left:
+		frame = anim.get_frame()
+		anim.play("AttackRight")
+		anim.set_frame(frame)
 	
 	var direction = Input.get_axis("left", "right")
 	if direction and !Dead:
@@ -202,8 +214,8 @@ func ratAtk():
 		Engine.time_scale = 1
 
 func _on_death():
-	await get_tree().create_timer(1).timeout
-	self.queue_free()
+	await get_tree().create_timer(2).timeout
+	get_tree().change_scene_to_file("res://Level1.tscn")
 
 
 

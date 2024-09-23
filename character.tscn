@@ -369,7 +369,7 @@ shape = SubResource("RectangleShape2D_7j4op")
 texture_filter = 1
 material = SubResource("ShaderMaterial_dm4cm")
 sprite_frames = SubResource("SpriteFrames_ajwqw")
-animation = &"DeathLeft"
+animation = &"AttackRight"
 
 [node name="Right" type="Area2D" parent="."]
 
@@ -391,6 +391,7 @@ libraries = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
+modulate = Color(1, 0, 0, 1)
 position = Vector2(0, -140)
 zoom = Vector2(1.25, 1.25)
 

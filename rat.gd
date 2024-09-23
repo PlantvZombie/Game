@@ -15,6 +15,8 @@ var Dead:bool = false
 var Attacking:bool = false
 signal Death
 signal RatAttack
+var AttackPossible:bool = false
+signal AttackTrue
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -52,6 +54,10 @@ func _physics_process(delta):
 		left = false
 		AnimOver = false
 		StartMovement.emit()
+	
+	if AttackPossible:
+		AttackTrue.emit()
+		
 	if anim.get_animation() == "AttackRight" and anim.get_frame() == 6:
 		get_node("Right/CollisionShape2D").set_disabled(false)
 	elif anim.get_animation() == "AttackLeft" and anim.get_frame() == 6:
@@ -115,7 +121,7 @@ func _on_character_attacked():
 
 func _on_right_body_entered(body):
 	if body.name == "Character":
-		body.health -= 10
+		body.health -= 40
 		get_node("/root/Global").HitRight = true
 		get_node("/root/Global").HitLeft = false
 		RatAttack.emit()
@@ -123,24 +129,30 @@ func _on_right_body_entered(body):
 
 func _on_left_body_entered(body):
 	if body.name == "Character":
-		body.health -= 10
+		body.health -= 40
 		get_node("/root/Global").HitRight = false
 		get_node("/root/Global").HitLeft = true
 		RatAttack.emit()
 
 func _on_close_detection_body_entered(body):
 	if body.name == "Character":
-		if !TweenIsBlank:
-			tween.stop()
-		if right and !Attacking:
-			Attacking = true
-			anim.play("AttackRight")
-			await get_tree().create_timer(1.4).timeout
-			Attacking = false
-			get_node("/root/Global").HitRight = false
-		if left and !Attacking:
-			Attacking = true
-			anim.play("AttackLeft")
-			await get_tree().create_timer(1.4).timeout
-			Attacking = false
-			get_node("/root/Global").HitLeft = false
+		AttackPossible = true
+
+func _on_attack_true():
+	if !TweenIsBlank:
+		tween.stop()
+	if right and !Attacking:
+		Attacking = true
+		anim.play("AttackRight")
+		await get_tree().create_timer(1.5).timeout
+		Attacking = false
+		get_node("/root/Global").HitRight = false
+	if left and !Attacking:
+		Attacking = true
+		anim.play("AttackLeft")
+		await get_tree().create_timer(1.5).timeout
+		Attacking = false
+		get_node("/root/Global").HitLeft = false
+
+func _on_close_detection_body_exited(body):
+	AttackPossible = false

@@ -9,7 +9,7 @@ var direction
 
 func _on_body_entered(body):
 	if body.name == "Character":
-		get_tree().change_scene_to_file("res://Level1.tscn")
+		body.health -= 50
 
 func _ready():
 	slope = (self.global_position.y - target.y)/(self.global_position.x - target.x)
